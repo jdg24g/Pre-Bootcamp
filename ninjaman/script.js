@@ -72,13 +72,13 @@ var bluey = {
 
 function dibujarNinjaman() {
   document.getElementById("ninjaman").style.left = ninjaman.left * 40 + "px";
-  document.getElementById("ninjaman").style.top = ninjaman.top * 40 +40+ "px";
+  document.getElementById("ninjaman").style.top = ninjaman.top * 40 + 40 + "px";
   comer(mapa[ninjaman.top][ninjaman.left]);
 }
 
 function dibujarBluey() {
   document.getElementById("fantasma").style.left = bluey.left * 40 + "px";
-  document.getElementById("fantasma").style.top = bluey.top * 40 + 40+ "px";
+  document.getElementById("fantasma").style.top = bluey.top * 40 + 40 + "px";
 }
 
 function comer(ubicacion) {
@@ -156,7 +156,7 @@ function movimientoFantasma() {
     var eleccion = moves[aleatorio];
     bluey.left = eleccion[1];
     bluey.top = eleccion[0];
-  }else{
+  } else {
     var aleatorio = Math.floor(Math.random() * alternarMovimientos.length);
     var eleccion = alternarMovimientos[aleatorio];
     bluey.left = eleccion[1];
@@ -166,50 +166,50 @@ function movimientoFantasma() {
   verificarMuerte();
 }
 
-function nuevoJuego(){
-    crearMundo(20,20);
-    pararBluey= setInterval(movimientoFantasma, 250);
-    //crear funcion que agrega comida despues no olvidarme
-    pararComida= setInterval(addComida, 2000);
-    bluey.left= 18;
-    bluey.top= 18;
-    ninjaman.left= 1;
-    ninjaman.top= 1;
-    dibujarNinjaman();
-    dibujarBluey();
+function nuevoJuego() {
+  crearMundo(20, 20);
+  pararBluey = setInterval(movimientoFantasma, 250);
+  //crear funcion que agrega comida despues no olvidarme
+  pararComida = setInterval(addComida, 2000);
+  bluey.left = 18;
+  bluey.top = 18;
+  ninjaman.left = 1;
+  ninjaman.top = 1;
+  dibujarNinjaman();
+  dibujarBluey();
 }
 nuevoJuego();
 
-function addComida(){
-    var fila = 0;
-    var columna = 0;
-    while(mapa[fila][columna] !== 1){
-        fila = Math.floor(Math.random() * mapa.length);
-        columna = Math.floor(Math.random() * mapa[0].length);  
-    }
-    var aleatorio = Math.floor(Math.random() * 100);
-    if(aleatorio < 9){
-        mapa[fila][columna] = 2;
-    }else{
-        mapa[fila][columna]=3;
-    }
-    dibujarMapa(mapa);
+function addComida() {
+  var fila = 0;
+  var columna = 0;
+  while (mapa[fila][columna] !== 1) {
+    fila = Math.floor(Math.random() * mapa.length);
+    columna = Math.floor(Math.random() * mapa[0].length);
+  }
+  var aleatorio = Math.floor(Math.random() * 100);
+  if (aleatorio < 9) {
+    mapa[fila][columna] = 2;
+  } else {
+    mapa[fila][columna] = 3;
+  }
+  dibujarMapa(mapa);
 }
 
-function verificarMuerte(){
-    if(bluey.top === ninjaman.top && bluey.left === ninjaman.left){
-        clearInterval(pararBluey);
-        clearInterval(pararComida);
-        var vida = document.querySelector("#vida");
-        vida.textContent = Number(vida.textContent) - 1;
-        if(Number(vida.textContent) > 0){
-            alert("Perdiste, vuelve a intentarlo");
-            nuevoJuego();
-        }else{
-            var puntos = document.querySelector("#puntos");
-            alert("Tu puntaje fue: " + puntos.textContent);
-            puntos.textContent = 0;
-            vida.textContent = 3;
-        }
+function verificarMuerte() {
+  if (bluey.top === ninjaman.top && bluey.left === ninjaman.left) {
+    clearInterval(pararBluey);
+    clearInterval(pararComida);
+    var vida = document.querySelector("#vida");
+    vida.textContent = Number(vida.textContent) - 1;
+    if (Number(vida.textContent) > 0) {
+      alert("Perdiste, vuelve a intentarlo");
+      nuevoJuego();
+    } else {
+      var puntos = document.querySelector("#puntos");
+      alert("Tu puntaje fue: " + puntos.textContent);
+      puntos.textContent = 0;
+      vida.textContent = 3;
     }
+  }
 }
