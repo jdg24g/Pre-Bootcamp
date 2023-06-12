@@ -12,7 +12,6 @@ var mapa = [
   [0, 1, 1, 2, 0],
   [0, 0, 0, 0, 0],
 ];
-
 function dibujarMapa(mundoArr) {
   var string = "";
   var diccionario = {
@@ -32,7 +31,6 @@ function dibujarMapa(mundoArr) {
   mundo.innerHTML = string;
   mapa = mundoArr;
 }
-
 function crearMundo(filas, columnas) {
   var mundoArr = [];
   for (var i = 0; i < filas; i++) {
@@ -59,28 +57,38 @@ function crearMundo(filas, columnas) {
   mundoArr[filas - 2][columnas - 2] = 1;
   dibujarMapa(mundoArr);
 }
-
 var ninjaman = {
   left: 1,
   top: 1,
 };
-
 var bluey = {
   left: 1,
   top: 1,
 };
-
 function dibujarNinjaman() {
   document.getElementById("ninjaman").style.left = ninjaman.left * 40 + "px";
   document.getElementById("ninjaman").style.top = ninjaman.top * 40 + 40 + "px";
   comer(mapa[ninjaman.top][ninjaman.left]);
 }
-
 function dibujarBluey() {
   document.getElementById("fantasma").style.left = bluey.left * 40 + "px";
   document.getElementById("fantasma").style.top = bluey.top * 40 + 40 + "px";
 }
-
+function addComida() {
+  var fila = 0;
+  var columna = 0;
+  while (mapa[fila][columna] !== 1) {
+    fila = Math.floor(Math.random() * mapa.length);
+    columna = Math.floor(Math.random() * mapa[0].length);
+  }
+  var aleatorio = Math.floor(Math.random() * 100);
+  if (aleatorio < 9) {
+    mapa[fila][columna] = 2;
+  } else {
+    mapa[fila][columna] = 3;
+  }
+  dibujarMapa(mapa);
+}
 function comer(ubicacion) {
   var puntos = Number(document.querySelector("#puntos").textContent);
   switch (ubicacion) {
@@ -95,7 +103,6 @@ function comer(ubicacion) {
   mapa[ninjaman.top][ninjaman.left] = 1;
   dibujarMapa(mapa);
 }
-
 document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
@@ -121,7 +128,6 @@ document.onkeydown = function (e) {
   }
   dibujarNinjaman();
 };
-
 function movimientoFantasma() {
   var direccion = [
     [bluey.top, bluey.left + 1],
@@ -165,7 +171,6 @@ function movimientoFantasma() {
   dibujarBluey();
   verificarMuerte();
 }
-
 function nuevoJuego() {
   crearMundo(20, 20);
   pararBluey = setInterval(movimientoFantasma, 250);
@@ -179,23 +184,6 @@ function nuevoJuego() {
   dibujarBluey();
 }
 nuevoJuego();
-
-function addComida() {
-  var fila = 0;
-  var columna = 0;
-  while (mapa[fila][columna] !== 1) {
-    fila = Math.floor(Math.random() * mapa.length);
-    columna = Math.floor(Math.random() * mapa[0].length);
-  }
-  var aleatorio = Math.floor(Math.random() * 100);
-  if (aleatorio < 9) {
-    mapa[fila][columna] = 2;
-  } else {
-    mapa[fila][columna] = 3;
-  }
-  dibujarMapa(mapa);
-}
-
 function verificarMuerte() {
   if (bluey.top === ninjaman.top && bluey.left === ninjaman.left) {
     clearInterval(pararBluey);
